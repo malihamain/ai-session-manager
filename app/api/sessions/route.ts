@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { createSession, fetchSessions } from "@/lib/api/sessions";
 
+export const runtime = "nodejs";
+
 export async function GET() {
   try {
     const sessions = await fetchSessions();

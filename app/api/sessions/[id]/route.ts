@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { fetchSessionById, deleteSession } from "@/lib/api/sessions";
 
+export const runtime = "nodejs";
+
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }

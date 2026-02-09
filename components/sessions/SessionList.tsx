@@ -10,7 +10,8 @@ export function SessionList({ sessions, onSessionDeleted }: SessionListProps) {
   if (sessions.length === 0) {
     return (
       <p style={{ color: "var(--text-muted)", marginTop: "1rem" }}>
-        No sessions yet. Use the form above to create one (e.g. type a title and click “New session”), then open it to chat.
+        No sessions yet. Use the form above to create one (e.g. type a title and
+        click “New session”), then open it to chat.
       </p>
     );
   }

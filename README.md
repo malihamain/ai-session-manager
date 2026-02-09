@@ -22,6 +22,24 @@ cp .env.example .env.local
 
 Get a free key at [Google AI Studio](https://aistudio.google.com/apikey). Without it, the app still runs and shows a mock response in chat.
 
+## Deployment
+
+The app is ready to deploy (e.g. [Vercel](https://vercel.com)). **Do not commit your API key.** Set it as an environment variable in your host:
+
+- **Vercel:** Project → Settings → Environment Variables → add `GEMINI_API_KEY` with your key (enable for Production/Preview as needed).
+- **Netlify:** Site settings → Environment variables → add `GEMINI_API_KEY`.
+- **Other hosts:** Set `GEMINI_API_KEY` in the platform’s env/config so the server can read it at runtime.
+
+Redeploy after adding the variable. The app uses `process.env.GEMINI_API_KEY` and will work once the variable is set.
+
+**Storage:** In production, sessions and messages are stored in **Redis** (via the `redis` client), so they survive deploys and serverless restarts. In local dev without Redis configured, the app falls back to in-memory storage.
+
+To enable persistent storage, create a Redis database (for example with Redis Cloud or Vercel Storage → Redis) and set this environment variable:
+
+- `REDIS_URL` – e.g. `redis://default:password@host:port`
+
+The storage layer automatically switches to Redis when `REDIS_URL` is set.
+
 ### Optional (for demo)
 
 - **`NEXT_PUBLIC_MOCK_DELAY_MS`** – Simulate API delay in ms (e.g. `2000` for 2 seconds).
@@ -38,7 +56,7 @@ Get a free key at [Google AI Studio](https://aistudio.google.com/apikey). Withou
 
 - **Next.js 15** (App Router), **React 19**, **TypeScript**
 - **Domain** – Types and repositories in `lib/domain/`; in-memory stores in `lib/storage/`.
-- **Data** – Sessions and messages are stored in memory and are cleared when the dev server restarts.
+- **Data** – Sessions and messages are stored in Redis in production (in-memory fallback in local dev).
 
 ## Scripts
 

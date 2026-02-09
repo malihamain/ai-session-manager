@@ -14,9 +14,18 @@ export function CreateSessionForm() {
     setError(null);
     setLoading(true);
     try {
-      const res = await fetch("/api/sessions", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title }) });
+      const res = await fetch("/api/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      });
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(typeof data?.error === "string" ? data.error : "Failed to create session");
+      if (!res.ok)
+        throw new Error(
+          typeof data?.error === "string"
+            ? data.error
+            : "Failed to create session",
+        );
       const id = data?.id;
       if (typeof id !== "string" || !id.trim()) {
         setError("Server did not return a session id. Please try again.");
@@ -33,7 +42,14 @@ export function CreateSessionForm() {
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: "1.5rem" }}>
-      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         <input
           type="text"
           value={title}
@@ -63,7 +79,17 @@ export function CreateSessionForm() {
           {loading ? "Creating…" : "New session"}
         </button>
       </div>
-      {error && <p style={{ color: "var(--error)", marginTop: "0.5rem", fontSize: "0.875rem" }}>{error}</p>}
+      {error && (
+        <p
+          style={{
+            color: "var(--error)",
+            marginTop: "0.5rem",
+            fontSize: "0.875rem",
+          }}
+        >
+          {error}
+        </p>
+      )}
     </form>
   );
 }
